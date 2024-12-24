@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Primera Página Web</title>
+    <title>Página con Interactividad</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,66 +11,52 @@
             padding: 0;
             background-color: #f4f4f4;
             color: #333;
+            text-align: center;
         }
         header {
             background-color: #007bff;
             color: white;
             padding: 10px 20px;
-            text-align: center;
         }
-        nav {
-            display: flex;
-            justify-content: center;
-            background-color: #0056b3;
-            padding: 10px;
+        h1 {
+            margin-top: 50px;
         }
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin: 0 15px;
-            font-size: 18px;
-        }
-        nav a:hover {
-            text-decoration: underline;
-        }
-        main {
-            padding: 20px;
-            text-align: center;
-        }
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 10px 0;
+        button {
+            padding: 10px 20px;
             margin-top: 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Bienvenido a Mi Página Web</h1>
+        <h1>Mi Página Interactiva</h1>
     </header>
-    <nav>
-        <a href="#inicio">Inicio</a>
-        <a href="#sobre-mi">Sobre mí</a>
-        <a href="#contacto">Contacto</a>
-    </nav>
     <main>
-        <section id="inicio">
-            <h2>Inicio</h2>
-            <p>Esta es la página de inicio. Aquí puedes escribir algo sobre ti o el propósito de la página.</p>
-        </section>
-        <section id="sobre-mi">
-            <h2>Sobre mí</h2>
-            <p>Esta sección es para compartir algo sobre ti o tus intereses.</p>
-        </section>
-        <section id="contacto">
-            <h2>Contacto</h2>
-            <p>Puedes poner información de contacto o un formulario aquí.</p>
-        </section>
+        <h2 id="message">¡Hola Mundo!</h2>
+        <button onclick="changeMessage()">Cambiar Mensaje</button>
     </main>
     <footer>
         <p>&copy; 2024 Mi Página Web</p>
     </footer>
+
+    <script>
+        function changeMessage() {
+            const messageElement = document.getElementById("message");
+            if (messageElement.innerText === "¡Hola Mundo!") {
+                messageElement.innerText = "¡Bienvenido al mundo de la programación!";
+            } else {
+                messageElement.innerText = "¡Hola Mundo!";
+            }
+        }
+    </script>
 </body>
 </html>
