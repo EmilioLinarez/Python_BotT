@@ -17,28 +17,20 @@
             color: white;
             padding: 10px 20px;
             font-size: 18px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            width: 100%;
+            text-align: center;
         }
         #header small {
             font-size: 12px;
+            display: block;
             color: #f0f8ff;
         }
         #login-form {
             display: none;
             text-align: center;
             padding-top: 50px;
-            width: 100%;
         }
         #login-form.active {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            display: block;
         }
         #login-box {
             background-color: #d0eaff;
@@ -48,17 +40,6 @@
             width: 350px;
             margin: 0 auto;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        #login-box h2 {
-            margin-bottom: 20px;
-        }
-        #login-box input {
-            margin: 10px;
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #004080;
-            border-radius: 5px;
-            width: 90%;
         }
         #menu {
             background-color: #004080;
@@ -107,11 +88,7 @@
 </head>
 <body>
     <div id="header">
-        <div>
-            Tidal Dev - 
-            <span id="current-date"></span> | 
-            <span id="current-time"></span>
-        </div>
+        Tidal Dev - <span id="current-date"></span> | <span id="current-time"></span>
         <small id="system-info"></small>
     </div>
 
@@ -201,10 +178,9 @@
         function updateSystemInfo() {
             const uptime = `${Math.floor(performance.now() / 1000)} segundos`;
             const platform = navigator.platform;
-            const browser = navigator.userAgent;
             const screenRes = `${window.screen.width}x${window.screen.height}`;
             document.getElementById('system-info').innerText = 
-                `Uptime: ${uptime} | Plataforma: ${platform} | Navegador: ${browser} | Resolución: ${screenRes}`;
+                `Uptime: ${uptime} | Plataforma: ${platform} | Resolución: ${screenRes}`;
         }
 
         // Mostrar la sección correspondiente
