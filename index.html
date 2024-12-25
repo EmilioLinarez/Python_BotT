@@ -49,6 +49,7 @@
             border: 2px solid #004080;
             border-radius: 5px;
             margin: 10px;
+            width: 90%;
         }
         #container {
             padding: 20px;
@@ -56,6 +57,23 @@
             border-radius: 10px;
             background-color: #ffffff;
             display: inline-block;
+            margin-bottom: 20px;
+        }
+        #email-box {
+            padding: 20px;
+            border: 2px solid #004080;
+            border-radius: 10px;
+            background-color: #d0eaff; /* Azul claro */
+            width: 80%;
+            margin: 0 auto;
+            text-align: left;
+        }
+        .input-box {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #004080;
+            border-radius: 5px;
+            background-color: #ffffff;
         }
     </style>
 </head>
@@ -83,13 +101,29 @@
             <button class="button" onclick="updateText()">Cambiar texto</button>
             <button class="button" onclick="startCountdown()">Iniciar cronómetro</button>
             <button class="button" onclick="setAlarm()">Establecer alarma</button>
-            <button class="button" onclick="sendEmail()">Enviar correo</button>
             <br>
             <label for="alarm-time">Introduce una hora (HH:MM:SS): </label>
             <input type="time" id="alarm-time">
             <br>
             <label for="countdown-seconds">Segundos para el cronómetro: </label>
             <input type="number" id="countdown-seconds" min="1" placeholder="Ejemplo: 10">
+        </div>
+
+        <div id="email-box">
+            <h3>Enviar un correo</h3>
+            <div class="input-box">
+                <label for="email-to">Para:</label>
+                <input type="email" id="email-to" placeholder="Correo del destinatario">
+            </div>
+            <div class="input-box">
+                <label for="email-subject">Asunto:</label>
+                <input type="text" id="email-subject" placeholder="Asunto del correo">
+            </div>
+            <div class="input-box">
+                <label for="email-message">Mensaje:</label>
+                <textarea id="email-message" rows="4" style="width: 90%;"></textarea>
+            </div>
+            <button class="button" onclick="sendEmail()">Enviar correo</button>
         </div>
     </div>
 
@@ -150,10 +184,19 @@
 
         // Función para enviar un correo usando EmailJS
         function sendEmail() {
+            const toEmail = document.getElementById('email-to').value;
+            const subject = document.getElementById('email-subject').value;
+            const message = document.getElementById('email-message').value;
+
+            if (!toEmail || !subject || !message) {
+                alert("Por favor, llena todos los campos.");
+                return;
+            }
+
             const templateParams = {
-                to_name: "Destinatario",
-                from_name: "Tu Página Web",
-                message: "Este es un correo enviado desde Tidal Dev",
+                to_email: toEmail,
+                subject: subject,
+                message: message,
             };
 
             emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", templateParams)
