@@ -3,15 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página interactiva</title>
+    <title>Tidal</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
+            background-color: #f0f8ff;
+            color: #004080;
             margin-top: 50px;
         }
         #time {
-            font-size: 24px;
+            font-size: 28px;
             margin-bottom: 20px;
         }
         .button {
@@ -19,38 +21,106 @@
             margin: 10px;
             font-size: 16px;
             cursor: pointer;
+            background-color: #004080;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background-color: #0066cc;
+        }
+        input {
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #004080;
+            border-radius: 5px;
+            margin: 10px;
+        }
+        #container {
+            padding: 20px;
+            border: 2px solid #004080;
+            border-radius: 10px;
+            background-color: #ffffff;
+            display: inline-block;
         }
     </style>
 </head>
 <body>
-    <h1>Bienvenido a mi página interactiva</h1>
-    <div id="time">La hora actual es: <span id="current-time"></span></div>
-    <p id="text">Este es el texto inicial.</p>
-    <button class="button" onclick="updateText()">Cambiar texto</button>
-    <button class="button" onclick="showAlert()">Mostrar alerta</button>
-    <button class="button" onclick="updateTime()">Actualizar hora</button>
+    <h1>Tidal</h1>
+    <div id="container">
+        <div id="time">La hora actual es: <span id="current-time"></span></div>
+        <p id="text">Este es el texto inicial.</p>
+        <button class="button" onclick="updateText()">Cambiar texto</button>
+        <button class="button" onclick="startCountdown()">Iniciar cronómetro</button>
+        <button class="button" onclick="setAlarm()">Establecer alarma</button>
+        <br>
+        <label for="alarm-time">Introduce una hora (HH:MM:SS): </label>
+        <input type="time" id="alarm-time">
+        <br>
+        <label for="countdown-seconds">Segundos para el cronómetro: </label>
+        <input type="number" id="countdown-seconds" min="1" placeholder="Ejemplo: 10">
+    </div>
 
     <script>
-        // Función para mostrar la hora actual
+        // Función para actualizar la hora automáticamente
         function updateTime() {
             const now = new Date();
             const timeString = now.toLocaleTimeString();
             document.getElementById('current-time').innerText = timeString;
+
+            // Revisar alarma
+            checkAlarm(timeString);
         }
+
+        // Configurar actualización automática de la hora
+        setInterval(updateTime, 1000);
 
         // Función para cambiar el texto del párrafo
         function updateText() {
-            const textElement = document.getElementById('text');
-            textElement.innerText = "¡El texto ha sido cambiado!";
+            document.getElementById('text').innerText = "¡El texto ha sido cambiado!";
         }
 
-        // Función para mostrar una alerta
-        function showAlert() {
-            alert("¡Has presionado el botón de alerta!");
+        // Función para iniciar un cronómetro
+        function startCountdown() {
+            const seconds = document.getElementById('countdown-seconds').value;
+            if (seconds && seconds > 0) {
+                let timeLeft = seconds;
+                const countdownInterval = setInterval(() => {
+                    if (timeLeft > 0) {
+                        document.getElementById('text').innerText = `Quedan ${timeLeft} segundos`;
+                        timeLeft--;
+                    } else {
+                        clearInterval(countdownInterval);
+                        document.getElementById('text').innerText = "¡Tiempo terminado!";
+                    }
+                }, 1000);
+            } else {
+                alert("Introduce un número válido de segundos.");
+            }
         }
 
-        // Actualiza la hora al cargar la página
-        updateTime();
+        // Variable para guardar la hora de la alarma
+        let alarmTime = null;
+
+        // Función para configurar la alarma
+        function setAlarm() {
+            const alarmInput = document.getElementById('alarm-time').value;
+            if (alarmInput) {
+                alarmTime = alarmInput + ":00"; // Asegurarse de tener el formato HH:MM:SS
+                document.getElementById('text').innerText = `Alarma configurada para ${alarmInput}`;
+            } else {
+                alert("Introduce una hora válida para la alarma.");
+            }
+        }
+
+        // Función para verificar si la alarma debe activarse
+        function checkAlarm(currentTime) {
+            if (alarmTime && currentTime === alarmTime) {
+                document.getElementById('text').innerText = "¡Es hora de la alarma!";
+                alarmTime = null; // Reiniciar la alarma
+            }
+        }
     </script>
 </body>
 </html>
