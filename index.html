@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tidal</title>
+    <title>Tidal Dev</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -12,9 +12,22 @@
             color: #004080;
             margin-top: 50px;
         }
-        #time {
-            font-size: 28px;
+        #header {
+            background-color: #008000; /* Franja verde */
+            color: white;
+            padding: 15px 0;
+            font-size: 24px;
+            font-weight: bold;
             margin-bottom: 20px;
+        }
+        #login-form, #main-content {
+            display: none;
+        }
+        #main-content.active {
+            display: block;
+        }
+        #login-form.active {
+            display: block;
         }
         .button {
             padding: 10px 20px;
@@ -47,22 +60,56 @@
     </style>
 </head>
 <body>
-    <h1>Tidal</h1>
-    <div id="container">
-        <div id="time">La hora actual es: <span id="current-time"></span></div>
-        <p id="text">Este es el texto inicial.</p>
-        <button class="button" onclick="updateText()">Cambiar texto</button>
-        <button class="button" onclick="startCountdown()">Iniciar cronómetro</button>
-        <button class="button" onclick="setAlarm()">Establecer alarma</button>
-        <br>
-        <label for="alarm-time">Introduce una hora (HH:MM:SS): </label>
-        <input type="time" id="alarm-time">
-        <br>
-        <label for="countdown-seconds">Segundos para el cronómetro: </label>
-        <input type="number" id="countdown-seconds" min="1" placeholder="Ejemplo: 10">
+    <div id="header">Tidal Dev</div>
+
+    <div id="login-form" class="active">
+        <h2>Inicio de sesión</h2>
+        <div id="login-container">
+            <label for="username">Usuario:</label>
+            <input type="text" id="username" placeholder="Ingresa tu usuario">
+            <br>
+            <label for="password">Contraseña:</label>
+            <input type="password" id="password" placeholder="Ingresa la contraseña">
+            <br>
+            <button class="button" onclick="login()">Ingresar</button>
+        </div>
+        <div id="login-error" style="color: red; margin-top: 10px;"></div>
+    </div>
+
+    <div id="main-content">
+        <div id="container">
+            <div id="time">La hora actual es: <span id="current-time"></span></div>
+            <p id="text">Este es el texto inicial.</p>
+            <button class="button" onclick="updateText()">Cambiar texto</button>
+            <button class="button" onclick="startCountdown()">Iniciar cronómetro</button>
+            <button class="button" onclick="setAlarm()">Establecer alarma</button>
+            <br>
+            <label for="alarm-time">Introduce una hora (HH:MM:SS): </label>
+            <input type="time" id="alarm-time">
+            <br>
+            <label for="countdown-seconds">Segundos para el cronómetro: </label>
+            <input type="number" id="countdown-seconds" min="1" placeholder="Ejemplo: 10">
+        </div>
     </div>
 
     <script>
+        // Variables globales
+        const today = new Date();
+        const correctPassword = String(today.getMonth() + 1).padStart(2, '0') + String(today.getDate()).padStart(2, '0');
+
+        // Función de inicio de sesión
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username === "system" && password === correctPassword) {
+                document.getElementById('login-form').classList.remove('active');
+                document.getElementById('main-content').classList.add('active');
+            } else {
+                document.getElementById('login-error').innerText = "Usuario o contraseña incorrectos.";
+            }
+        }
+
         // Función para actualizar la hora automáticamente
         function updateTime() {
             const now = new Date();
