@@ -29,6 +29,15 @@
         #login-form.active {
             display: block;
         }
+        #login-form {
+            padding: 20px;
+            border: 2px solid #004080;
+            border-radius: 10px;
+            background-color: #ffffff;
+            display: inline-block;
+            width: 300px;
+            margin: 0 auto;
+        }
         .button {
             padding: 10px 20px;
             margin: 10px;
@@ -82,15 +91,13 @@
 
     <div id="login-form" class="active">
         <h2>Inicio de sesión</h2>
-        <div id="login-container">
-            <label for="username">Usuario:</label>
-            <input type="text" id="username" placeholder="Ingresa tu usuario">
-            <br>
-            <label for="password">Contraseña:</label>
-            <input type="password" id="password" placeholder="Ingresa la contraseña">
-            <br>
-            <button class="button" onclick="login()">Ingresar</button>
-        </div>
+        <label for="username">Usuario:</label>
+        <input type="text" id="username" placeholder="Ingresa tu usuario">
+        <br>
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" placeholder="Ingresa la contraseña">
+        <br>
+        <button class="button" onclick="login()">Ingresar</button>
         <div id="login-error" style="color: red; margin-top: 10px;"></div>
     </div>
 
