@@ -10,14 +10,13 @@
             background-color: #f0f8ff;
             color: #004080;
             margin: 0;
-            display: flex;
         }
         #header {
             background-color: #008000;
             color: white;
             padding: 10px 20px;
             font-size: 18px;
-            text-align: center;
+            display: none;
         }
         #header small {
             font-size: 12px;
@@ -28,9 +27,13 @@
             display: none;
             text-align: center;
             padding-top: 50px;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         #login-form.active {
-            display: block;
+            display: flex;
         }
         #login-box {
             background-color: #d0eaff;
@@ -38,8 +41,8 @@
             padding: 20px;
             border-radius: 10px;
             width: 350px;
-            margin: 0 auto;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
         #menu {
             background-color: #004080;
@@ -49,6 +52,9 @@
             box-sizing: border-box;
             color: white;
             display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
         }
         #menu.active {
             display: block;
@@ -68,8 +74,12 @@
             background-color: #004080;
         }
         #content {
-            flex-grow: 1;
+            margin-left: 200px;
             padding: 20px;
+            display: none;
+        }
+        #content.active {
+            display: block;
         }
         .section {
             display: none;
@@ -106,34 +116,32 @@
 
     <div id="menu"></div>
 
-    <div id="main-content">
-        <div id="content">
-            <div id="alarms" class="section active">
-                <div id="container">
-                    <h3>Gestionar Alarmas</h3>
-                    <p>Introduce una hora para la alarma:</p>
-                    <input type="time" id="alarm-time">
-                    <button class="button" onclick="setAlarm()">Establecer alarma</button>
-                    <p id="text">No hay alarmas establecidas.</p>
-                </div>
+    <div id="content">
+        <div id="alarms" class="section active">
+            <div id="container">
+                <h3>Gestionar Alarmas</h3>
+                <p>Introduce una hora para la alarma:</p>
+                <input type="time" id="alarm-time">
+                <button class="button" onclick="setAlarm()">Establecer alarma</button>
+                <p id="text">No hay alarmas establecidas.</p>
             </div>
-            <div id="email" class="section">
-                <div id="email-box">
-                    <h3>Enviar un correo</h3>
-                    <div>
-                        <label for="email-to">Para:</label>
-                        <input type="email" id="email-to" placeholder="Correo del destinatario">
-                    </div>
-                    <div>
-                        <label for="email-subject">Asunto:</label>
-                        <input type="text" id="email-subject" placeholder="Asunto del correo">
-                    </div>
-                    <div>
-                        <label for="email-message">Mensaje:</label>
-                        <textarea id="email-message" rows="4" style="width: 90%;"></textarea>
-                    </div>
-                    <button class="button" onclick="sendEmail()">Enviar correo</button>
+        </div>
+        <div id="email" class="section">
+            <div id="email-box">
+                <h3>Enviar un correo</h3>
+                <div>
+                    <label for="email-to">Para:</label>
+                    <input type="email" id="email-to" placeholder="Correo del destinatario">
                 </div>
+                <div>
+                    <label for="email-subject">Asunto:</label>
+                    <input type="text" id="email-subject" placeholder="Asunto del correo">
+                </div>
+                <div>
+                    <label for="email-message">Mensaje:</label>
+                    <textarea id="email-message" rows="4" style="width: 90%;"></textarea>
+                </div>
+                <button class="button" onclick="sendEmail()">Enviar correo</button>
             </div>
         </div>
     </div>
@@ -155,8 +163,9 @@
 
             if (username === "system" && password === correctPassword) {
                 document.getElementById('login-form').classList.remove('active');
+                document.getElementById('header').style.display = 'block';
                 document.getElementById('menu').classList.add('active');
-                document.getElementById('main-content').style.display = 'flex';
+                document.getElementById('content').classList.add('active');
             } else {
                 document.getElementById('login-error').innerText = "Usuario o contraseña incorrectos.";
             }
