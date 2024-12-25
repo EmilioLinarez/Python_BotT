@@ -16,7 +16,7 @@
             color: white;
             padding: 10px 20px;
             font-size: 18px;
-            display: none;
+            display: flex;
             justify-content: space-between;
             align-items: center;
             position: sticky;
@@ -30,13 +30,9 @@
             display: none;
             text-align: center;
             padding-top: 50px;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
         }
         #login-form.active {
-            display: flex;
+            display: block;
         }
         #login-box {
             background-color: #d0eaff;
@@ -44,8 +40,19 @@
             padding: 20px;
             border-radius: 10px;
             width: 350px;
+            margin: 0 auto;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
+        }
+        #login-box h2 {
+            margin-bottom: 20px;
+        }
+        #login-box input {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #004080;
+            border-radius: 5px;
+            width: 90%;
         }
         #menu {
             background-color: #004080;
@@ -54,13 +61,6 @@
             padding: 20px;
             box-sizing: border-box;
             color: white;
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-        }
-        #menu.active {
-            display: block;
         }
         #menu button {
             background-color: #0066cc;
@@ -77,12 +77,8 @@
             background-color: #004080;
         }
         #content {
-            margin-left: 200px;
+            flex-grow: 1;
             padding: 20px;
-            display: none;
-        }
-        #content.active {
-            display: block;
         }
         .section {
             display: none;
@@ -101,7 +97,11 @@
 </head>
 <body>
     <div id="header">
-        Tidal Dev - <span id="current-date"></span> | <span id="current-time"></span>
+        <div>
+            Tidal Dev - 
+            <span id="current-date"></span> | 
+            <span id="current-time"></span>
+        </div>
         <small id="system-info"></small>
     </div>
 
@@ -117,34 +117,38 @@
         </div>
     </div>
 
-    <div id="menu"></div>
-
-    <div id="content">
-        <div id="alarms" class="section active">
-            <div id="container">
-                <h3>Gestionar Alarmas</h3>
-                <p>Introduce una hora para la alarma:</p>
-                <input type="time" id="alarm-time">
-                <button class="button" onclick="setAlarm()">Establecer alarma</button>
-                <p id="text">No hay alarmas establecidas.</p>
-            </div>
+    <div id="main-content">
+        <div id="menu">
+            <button onclick="showSection('alarms')">Alarmas</button>
+            <button onclick="showSection('email')">Correo</button>
         </div>
-        <div id="email" class="section">
-            <div id="email-box">
-                <h3>Enviar un correo</h3>
-                <div>
-                    <label for="email-to">Para:</label>
-                    <input type="email" id="email-to" placeholder="Correo del destinatario">
+        <div id="content">
+            <div id="alarms" class="section active">
+                <div id="container">
+                    <h3>Gestionar Alarmas</h3>
+                    <p>Introduce una hora para la alarma:</p>
+                    <input type="time" id="alarm-time">
+                    <button class="button" onclick="setAlarm()">Establecer alarma</button>
+                    <p id="text">No hay alarmas establecidas.</p>
                 </div>
-                <div>
-                    <label for="email-subject">Asunto:</label>
-                    <input type="text" id="email-subject" placeholder="Asunto del correo">
+            </div>
+            <div id="email" class="section">
+                <div id="email-box">
+                    <h3>Enviar un correo</h3>
+                    <div>
+                        <label for="email-to">Para:</label>
+                        <input type="email" id="email-to" placeholder="Correo del destinatario">
+                    </div>
+                    <div>
+                        <label for="email-subject">Asunto:</label>
+                        <input type="text" id="email-subject" placeholder="Asunto del correo">
+                    </div>
+                    <div>
+                        <label for="email-message">Mensaje:</label>
+                        <textarea id="email-message" rows="4" style="width: 90%;"></textarea>
+                    </div>
+                    <button class="button" onclick="sendEmail()">Enviar correo</button>
                 </div>
-                <div>
-                    <label for="email-message">Mensaje:</label>
-                    <textarea id="email-message" rows="4" style="width: 90%;"></textarea>
-                </div>
-                <button class="button" onclick="sendEmail()">Enviar correo</button>
             </div>
         </div>
     </div>
@@ -166,9 +170,7 @@
 
             if (username === "system" && password === correctPassword) {
                 document.getElementById('login-form').classList.remove('active');
-                document.getElementById('header').style.display = 'flex';
-                document.getElementById('menu').classList.add('active');
-                document.getElementById('content').classList.add('active');
+                document.getElementById('main-content').style.display = 'flex';
             } else {
                 document.getElementById('login-error').innerText = "Usuario o contraseña incorrectos.";
             }
@@ -188,11 +190,10 @@
 
         // Actualizar información del sistema
         function updateSystemInfo() {
-            const uptime = `${Math.floor(performance.now() / 1000)} segundos`;
-            const platform = navigator.platform;
-            const screenRes = `${window.screen.width}x${window.screen.height}`;
+            const uptime = ${Math.floor(performance.now() / 1000)} segundos;
+            const userAgent = navigator.userAgent;
             document.getElementById('system-info').innerText = 
-                `Uptime: ${uptime} | Plataforma: ${platform} | Resolución: ${screenRes}`;
+                Uptime: ${uptime} | Navegador: ${userAgent};
         }
 
         // Mostrar la sección correspondiente
@@ -206,7 +207,7 @@
         function setAlarm() {
             const alarmTime = document.getElementById('alarm-time').value;
             if (alarmTime) {
-                document.getElementById('text').innerText = `Alarma establecida para ${alarmTime}`;
+                document.getElementById('text').innerText = Alarma establecida para ${alarmTime};
             } else {
                 alert("Introduce una hora válida.");
             }
