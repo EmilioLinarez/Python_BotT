@@ -1,62 +1,56 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página con Interactividad</title>
+    <title>Página interactiva</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
             text-align: center;
-        }
-        header {
-            background-color: #007bff;
-            color: white;
-            padding: 10px 20px;
-        }
-        h1 {
             margin-top: 50px;
         }
-        button {
-            padding: 10px 20px;
-            margin-top: 20px;
-            font-size: 16px;
-            color: white;
-            background-color: #007bff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+        #time {
+            font-size: 24px;
+            margin-bottom: 20px;
         }
-        button:hover {
-            background-color: #0056b3;
+        .button {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Mi Página Interactiva</h1>
-    </header>
-    <main>
-        <h2 id="message">¡Hola Mundo!</h2>
-        <button onclick="changeMessage()">Cambiar Mensaje</button>
-    </main>
-    <footer>
-        <p>&copy; 2024 Mi Página Web</p>
-    </footer>
+    <h1>Bienvenido a mi página interactiva</h1>
+    <div id="time">La hora actual es: <span id="current-time"></span></div>
+    <p id="text">Este es el texto inicial.</p>
+    <button class="button" onclick="updateText()">Cambiar texto</button>
+    <button class="button" onclick="showAlert()">Mostrar alerta</button>
+    <button class="button" onclick="updateTime()">Actualizar hora</button>
 
     <script>
-        function changeMessage() {
-            const messageElement = document.getElementById("message");
-            if (messageElement.innerText === "¡Hola Mundo!") {
-                messageElement.innerText = "¡Bienvenido al mundo de la programación!";
-            } else {
-                messageElement.innerText = "¡Hola Mundo!";
-            }
+        // Función para mostrar la hora actual
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString();
+            document.getElementById('current-time').innerText = timeString;
         }
+
+        // Función para cambiar el texto del párrafo
+        function updateText() {
+            const textElement = document.getElementById('text');
+            textElement.innerText = "¡El texto ha sido cambiado!";
+        }
+
+        // Función para mostrar una alerta
+        function showAlert() {
+            alert("¡Has presionado el botón de alerta!");
+        }
+
+        // Actualiza la hora al cargar la página
+        updateTime();
     </script>
 </body>
 </html>
