@@ -83,6 +83,7 @@
             <button class="button" onclick="updateText()">Cambiar texto</button>
             <button class="button" onclick="startCountdown()">Iniciar cronómetro</button>
             <button class="button" onclick="setAlarm()">Establecer alarma</button>
+            <button class="button" onclick="sendEmail()">Enviar correo</button>
             <br>
             <label for="alarm-time">Introduce una hora (HH:MM:SS): </label>
             <input type="time" id="alarm-time">
@@ -92,7 +93,12 @@
         </div>
     </div>
 
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
     <script>
+        (function() {
+            emailjs.init("YOUR_USER_ID"); // Reemplaza con tu User ID de EmailJS
+        })();
+
         // Variables globales
         const today = new Date();
         const correctPassword = String(today.getMonth() + 1).padStart(2, '0') + String(today.getDate()).padStart(2, '0');
@@ -115,12 +121,7 @@
             const now = new Date();
             const timeString = now.toLocaleTimeString();
             document.getElementById('current-time').innerText = timeString;
-
-            // Revisar alarma
-            checkAlarm(timeString);
         }
-
-        // Configurar actualización automática de la hora
         setInterval(updateTime, 1000);
 
         // Función para cambiar el texto del párrafo
@@ -147,26 +148,22 @@
             }
         }
 
-        // Variable para guardar la hora de la alarma
-        let alarmTime = null;
+        // Función para enviar un correo usando EmailJS
+        function sendEmail() {
+            const templateParams = {
+                to_name: "Destinatario",
+                from_name: "Tu Página Web",
+                message: "Este es un correo enviado desde Tidal Dev",
+            };
 
-        // Función para configurar la alarma
-        function setAlarm() {
-            const alarmInput = document.getElementById('alarm-time').value;
-            if (alarmInput) {
-                alarmTime = alarmInput + ":00"; // Asegurarse de tener el formato HH:MM:SS
-                document.getElementById('text').innerText = `Alarma configurada para ${alarmInput}`;
-            } else {
-                alert("Introduce una hora válida para la alarma.");
-            }
-        }
-
-        // Función para verificar si la alarma debe activarse
-        function checkAlarm(currentTime) {
-            if (alarmTime && currentTime === alarmTime) {
-                document.getElementById('text').innerText = "¡Es hora de la alarma!";
-                alarmTime = null; // Reiniciar la alarma
-            }
+            emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", templateParams)
+                .then(function(response) {
+                    alert("Correo enviado exitosamente.");
+                    console.log("SUCCESS!", response.status, response.text);
+                }, function(error) {
+                    alert("Error al enviar el correo.");
+                    console.log("FAILED...", error);
+                });
         }
     </script>
 </body>
