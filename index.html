@@ -10,6 +10,7 @@
             background-color: #f0f8ff;
             color: #004080;
             margin: 0;
+            display: flex;
         }
         #header {
             background-color: #008000;
@@ -21,6 +22,7 @@
             align-items: center;
             position: sticky;
             top: 0;
+            width: 100%;
         }
         #header small {
             font-size: 12px;
@@ -30,9 +32,13 @@
             display: none;
             text-align: center;
             padding-top: 50px;
+            width: 100%;
         }
         #login-form.active {
-            display: block;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
         #login-box {
             background-color: #d0eaff;
@@ -61,6 +67,10 @@
             padding: 20px;
             box-sizing: border-box;
             color: white;
+            display: none;
+        }
+        #menu.active {
+            display: block;
         }
         #menu button {
             background-color: #0066cc;
@@ -117,11 +127,9 @@
         </div>
     </div>
 
+    <div id="menu"></div>
+
     <div id="main-content">
-        <div id="menu">
-            <button onclick="showSection('alarms')">Alarmas</button>
-            <button onclick="showSection('email')">Correo</button>
-        </div>
         <div id="content">
             <div id="alarms" class="section active">
                 <div id="container">
@@ -170,6 +178,7 @@
 
             if (username === "system" && password === correctPassword) {
                 document.getElementById('login-form').classList.remove('active');
+                document.getElementById('menu').classList.add('active');
                 document.getElementById('main-content').style.display = 'flex';
             } else {
                 document.getElementById('login-error').innerText = "Usuario o contraseña incorrectos.";
@@ -191,9 +200,11 @@
         // Actualizar información del sistema
         function updateSystemInfo() {
             const uptime = `${Math.floor(performance.now() / 1000)} segundos`;
-            const userAgent = navigator.userAgent;
+            const platform = navigator.platform;
+            const browser = navigator.userAgent;
+            const screenRes = `${window.screen.width}x${window.screen.height}`;
             document.getElementById('system-info').innerText = 
-                `Uptime: ${uptime} | Navegador: ${userAgent}`;
+                `Uptime: ${uptime} | Plataforma: ${platform} | Navegador: ${browser} | Resolución: ${screenRes}`;
         }
 
         // Mostrar la sección correspondiente
