@@ -17,10 +17,13 @@
             padding: 10px 20px;
             font-size: 18px;
             display: none;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
         }
         #header small {
             font-size: 12px;
-            display: block;
             color: #f0f8ff;
         }
         #login-form {
@@ -163,7 +166,7 @@
 
             if (username === "system" && password === correctPassword) {
                 document.getElementById('login-form').classList.remove('active');
-                document.getElementById('header').style.display = 'block';
+                document.getElementById('header').style.display = 'flex';
                 document.getElementById('menu').classList.add('active');
                 document.getElementById('content').classList.add('active');
             } else {
