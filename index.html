@@ -190,10 +190,10 @@
 
         // Actualizar información del sistema
         function updateSystemInfo() {
-            const uptime = ${Math.floor(performance.now() / 1000)} segundos;
+            const uptime = `${Math.floor(performance.now() / 1000)} segundos`;
             const userAgent = navigator.userAgent;
             document.getElementById('system-info').innerText = 
-                Uptime: ${uptime} | Navegador: ${userAgent};
+                `Uptime: ${uptime} | Navegador: ${userAgent}`;
         }
 
         // Mostrar la sección correspondiente
@@ -207,7 +207,7 @@
         function setAlarm() {
             const alarmTime = document.getElementById('alarm-time').value;
             if (alarmTime) {
-                document.getElementById('text').innerText = Alarma establecida para ${alarmTime};
+                document.getElementById('text').innerText = `Alarma establecida para ${alarmTime}`;
             } else {
                 alert("Introduce una hora válida.");
             }
